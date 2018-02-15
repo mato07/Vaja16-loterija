@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <h1>Hello, SmartNinja!</h1>
+    {% if sporocilo %}
+        <h1>Vase sporočilo od {{ posiljatelj}} je: {{ sporocilo }},
+            {{stvar}} je {{stvar}} pri {{stvar}}</h1>
+    {% else %}
+        <h1>Ni sporocila</h1>
+    {% endif %}
 </body>
 </html>
