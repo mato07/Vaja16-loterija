@@ -3,6 +3,7 @@
 import os
 import jinja2 # lahko so rdeci ker v resnici poganja googlov python
 import webapp2
+import random
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -30,15 +31,23 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
+        return self.render_template("osnovna-stran.html")
 
-        # tu vpises kodo
+class LotoHandler(BaseHandler):
+    def get(self):
+        loto_listek = []
 
-        izzrebane_stevilke = 2+3*5
+        for i in range(8):
+            while True:
+                nakljucno_stevilo = random.randint(1, 39)
+                if nakljucno_stevilo not in loto_listek:
+                    break
+            loto_listek.append(nakljucno_stevilo)
 
-        info = {"sporocilo": izzrebane_stevilke, "pošiljatelj": "Matija", "stvar": "tretja stvar"}
-        return self.render_template("hello.html", info) #Pokazi ta template
+        info = {"listek": loto_listek}
+        return self.render_template("loto.html",info)
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
-    webapp2.Route('/pozdrav', MainHandler)
+    webapp2.Route('/loto', LotoHandler)
 ], debug=True)
